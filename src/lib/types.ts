@@ -1,8 +1,19 @@
+// ── Shared literal sources — ใช้ร่วมกันระหว่าง type และ Zod schema ──
+const PROGRAMS = ["CPE", "ISNE"] as const;
+export { PROGRAMS };
+type Program = (typeof PROGRAMS)[number];
+export type { Program };
+
+const SEMESTERS = ["1", "2", "3"] as const;
+export { SEMESTERS };
+type Semester = (typeof SEMESTERS)[number];
+export type { Semester };
+
 interface Student {
   studentId: string;
   firstName: string;
   lastName: string;
-  program: "CPE" | "ISNE";
+  program: Program;
   courses?: string[];
   interests?: string[];
   emails?: StudentEmail[];
@@ -14,10 +25,20 @@ interface StudentEmail {
 }
 export type { StudentEmail };
 
+interface Instructor {
+  name: string;
+  email: string;
+}
+export type { Instructor };
+
 interface Course {
   courseId: string;
   courseTitle: string;
-  instructors: string[];
+  instructors: Instructor[];
+  program: Program;
+  semester: Semester;
+  description: string;
+  notifyByEmail: boolean;
 }
 export type { Course };
 
